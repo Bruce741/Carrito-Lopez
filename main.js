@@ -100,36 +100,42 @@ productoEspecificoPrecio();
 
 // Funcion para agregar al carrito // 
 
+let saludar = () => alert("gracias por visitas :)"); 
+
+function agregarProducto () {
+    
+         let producto = prompt("Ingrese el nombre del producto")
+
+         let productoAgregado = productos.find(function(objeto){
+             return objeto.nombre === producto;
+         })
+         
+          carrito.push(productoAgregado)   
+
+
+          console.log(carrito) 
+
+
+  
+ }
 function agregarCarrito () {
     let seguir = prompt("Desea agregar algun producto al carrito?")
 
     if (seguir == "si") {
-
-        function agregarProducto () {
-           // do {
-                let producto = prompt("Ingrese el nombre del producto")
-
-                let productoAgregado = productos.find(function(objeto){
-                    return objeto.nombre === producto;
-                })
-                
-                 carrito.push(productoAgregado)   
-
-
-                 console.log(carrito) 
-
-
-           // let repetir = prompt("Quiere agregar otro producto?")
-
-          //  } while (repetir == "si")    
-        }
     
         agregarProducto();
 
+        let repetir = prompt("Quiere agregar otro producto?")
+
+        if (repetir == "si") { 
+
+            agregarCarrito();
+
+        } else { saludar(); }
 
     } else if (seguir == "no") {
 
-        alert("gracias por visitas :)"); 
+        saludar(); 
 
     } else {
 
