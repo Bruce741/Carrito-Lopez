@@ -1,17 +1,25 @@
 // Inicio //
-function minimoEdad () {
-    alert('Esta pagina es para mayores de edad');
+let divInicio = document.getElementById("DivInicio")
 
+let body = document.getElementById("body")
+
+divInicio.innerHTML = "<h1>Este sitio es para mayores de edad, ingrese su edad para acceder </h1>"
+
+function minimoEdad () {
+    
     let edad = parseInt(prompt("Ingrese su edad"));
     
     if (edad >= 18) {
-    alert('Puede Acceder')
-    } else {
-        alert('Usted no puede Acceder')
-        minimoEdad();
+        divInicio.innerHTML = "<h1>Bienvenido al Carrito :)</h1>"
+    } else if (edad < 18) {
+        body.className = "FondoRojo" 
+        divInicio.innerHTML = "<h1>Vuelva cuando sea mayor de edad</h1>"
     } 
 }
 minimoEdad ();
+
+// Saludo // 
+
 
 // Productos // 
 
@@ -53,50 +61,6 @@ productos.push(producto1,producto2,producto3,producto4)
 
 const carrito = []
 
-function productosDisponibles() {
-    let conocerListaProductos = prompt("Quiere Saber que productos estan disponibles?")
-    if (conocerListaProductos == "si") {
-        productos.forEach((item) => {
-            alert(item.nombre);
-        })
-    } else if (conocerListaProductos == "no") {
-        alert("okey"); 
-    } else {
-        alert("Porfavor responda con un 'si' o un 'no'");
-        productosDisponibles();
-    }
-}
-
-productosDisponibles();
-
-function productoEspecificoPrecio() {
-
-    let conocerProductoEspecifico = prompt("Quiere saber el precio de un producto especifico")
-
-    if (conocerProductoEspecifico == "si") {
-
-        let nombreProductoEspecifico = prompt("Ingrese el nombre del producto")
-
-        const productoEspecifico = productos.find((item) => item.nombre === nombreProductoEspecifico);
-        
-        alert (productoEspecifico.precio + "$")
-
-    } else if (conocerProductoEspecifico == "no") {
-
-        alert("okey"); 
-
-    } else {
-
-        alert("Porfavor responda con un 'si' o un 'no'");
-        productoEspecificoPrecio();
-
-    }
-
-}
-
-// Cambiar esto por un while asi se puede repetir el proceso para mas productos // 
-
-productoEspecificoPrecio();
 
 // Funcion para agregar al carrito // 
 
@@ -115,40 +79,16 @@ function agregarProducto () {
 
           console.log(carrito) 
 
-
-  
- }
-function agregarCarrito () {
-    let seguir = prompt("Desea agregar algun producto al carrito?")
-
-    if (seguir == "si") {
-    
-        agregarProducto();
-
-        let repetir = prompt("Quiere agregar otro producto?")
-
-        if (repetir == "si") { 
-
-            agregarCarrito();
-
-        } else { saludar(); }
-
-    } else if (seguir == "no") {
-
-        saludar(); 
-
-    } else {
-
-        alert("Porfavor responda con un 'si' o un 'no'");
-        agregarCarrito();
-
-    }
 }
+ 
     
 agregarCarrito(); 
 
+// Guardar el carrito al localStorage // 
+
 
 // Precio del carrito // 
+
 let precioProducto1 = 0
 
 carrito.forEach(function(precioProducto){
@@ -172,16 +112,6 @@ let descuento = 0;
     
 
 // Tiene Descuento? //
-
-let tieneDescuento = prompt('Tiene Descuento?');
-
-if (tieneDescuento == 'si'){
-
-descuento = prompt('De cuanto?')
-
-} else {
-    alert('Okey!')
-}
 
 
 // Resultado // 
