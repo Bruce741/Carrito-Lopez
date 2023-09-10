@@ -3,16 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Carrito-Lopez</title>
 </head>
-<body class="FondoBlanco" id="Body">
+<body class="FondoBlanco">
+    
+    <header class="header">
 
-    <div id="DivInicio">
-        <h1></h1>
-    </div>
-   
+        <h1>Bienvenido al carrito!</h1>
+
+    </header>
+
     <div id="main"></div>
 
-    <script src="/JS/main.js"></script>
+    <h2>Tu carrito:</h2>
+    <div id="carritoDiv" class="carrito">
+        <div>
+            <h2>Carrito de Compras</h2>
+            <ul id="carritoLista"></ul>
+        </div>
+        <div id="totalDiv">
+        <h2>Total</h2>
+        <p id="total"></p>
+        </div>
+      </div>
+
+<script src="./JS/main.js"></script>
 </body>

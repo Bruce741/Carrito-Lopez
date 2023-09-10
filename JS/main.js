@@ -1,25 +1,7 @@
-// Inicio //
-let divInicio = document.getElementById("DivInicio")
-
-let body = document.getElementById("Body")
-
-divInicio.innerHTML = "<h1>Este sitio es para mayores de edad, ingrese su edad para acceder </h1>"
-
-function minimoEdad () {
-    
-    let edad = parseInt(prompt("Ingrese su edad"));
-    
-    if (edad >= 18) {
-        divInicio.innerHTML = "<h1>Bienvenido al Carrito :)</h1>"
-    } else if (edad < 18) {
-        body.className = "FondoRojo";
-        divInicio.innerHTML = "<h1>Vuelva cuando sea mayor de edad</h1>";
-    } 
-}
-minimoEdad ();
-
-// Saludo // 
-
+const suma = (a, b) => a + b;
+const resta = (a, b) => a - b;
+const iva = (x) => x * 0.21;
+const multiplicacion = (a,b) => a*b; 
 
 // Productos // 
 
@@ -27,6 +9,9 @@ class Producto {
     constructor (info) {
         this.nombre = info.nombre; 
         this.precio = info.precio;
+        this.imagen = info.imagen; 
+        this.cantidad = info.cantidad; 
+        this.class = info.class
     }
 }
 
@@ -34,112 +19,117 @@ const producto1 = new Producto({
     imagen: "../media/Laptop.png",
     nombre: "computadora",
     precio: 100,
+    cantidad: 1,
+    class: "producto1",
 })
 
 const producto2 = new Producto({
     imagen: "../media/Television.jpg",
     nombre: "television",
     precio: 50,
+    cantidad: 1,
+    class: "producto2"
 })
 
 const producto3 = new Producto({
     imagen: "../media/celular.jpg",
     nombre: "celular",
     precio: 40,
+    cantidad: 1,
+    class: "producto3",
 })
 
 const producto4 = new Producto({
     imagen: "../media/ps5.jpg",
     nombre: "consola",
     precio: 100,
+    cantidad: 1,
+    class: "producto4",
 })
 
 // Array de Productos // 
 
 const productos = []; 
+const carrito = []
 
-productos.push(producto1,producto2,producto3,producto4)
+productos.push(producto1)
+productos.push(producto2)
+productos.push(producto3)
+productos.push(producto4)
 
-
-// HTML // 
+// HTML //
 
 let divMain = document.getElementById("main");
 
-productos.forEach((item) => {
+productos.forEach((item, index) => {
     let divProductos = document.createElement("div");
-    div.innerHTML = ` 
+    divProductos.innerHTML = `
     <img src="${item.imagen}" alt="${item.nombre}">
-    <p>Nombre: ${item.nombre} <p>
+    <p>Nombre: ${item.nombre} </p>
     $${item.precio}
+    <button class="boton">Agregar al carrito </button>
     `
+    divProductos.className = `${item.class}` 
 
-    divMain.append(divProductos)
-})
+    divMain.append(divProductos);
+
+    // Botones // 
+
+    let botones = divProductos.querySelectorAll(".boton");
+
+    botones.forEach((boton) => {
+        boton.addEventListener("click", () => {
+            const productoSeleccionado = productos[index];
+            carrito.push(productoSeleccionado);
+
+            localStorage.setItem('carrito', JSON.stringify(carrito))
+
+            actualizarCarritoHTML();
+        });
+    });
+});
 
 
+// Carrito HTML // 
 
-// Carrito // 
-
-const carrito = []
-
-
-// Funcion para agregar al carrito // 
-
-let saludar = () => alert("gracias por visitas :)"); 
-
-function agregarProducto () {
+const actualizarCarritoHTML = () =>{
+    const carritoLista = document.getElementById("carritoLista");
     
-         let producto = prompt("Ingrese el nombre del producto")
+    carritoLista.innerHTML = "";
 
-         let productoAgregado = productos.find(function(objeto){
-             return objeto.nombre === producto;
-         })
-         
-          carrito.push(productoAgregado)   
+    const carritoGuardado = JSON.parse(localStorage.getItem('carrito'));
 
-
-          console.log(carrito) 
-
+    if (carritoGuardado && carritoGuardado.length > 0) {
+        carritoGuardado.forEach((producto) => {
+            const listaItem = document.createElement("li");
+            listaItem.innerText = `${producto.nombre} - $${producto.precio}`;
+            carritoLista.appendChild(listaItem);
+        });
+    } else {
+        const listaItem = document.createElement("li");
+        listaItem.innerText = "El carrito está vacío";
+        carritoLista.appendChild(listaItem);
+    }
 }
- 
-    
-agregarCarrito(); 
-
-// Guardar el carrito al localStorage // 
 
 
-// Precio del carrito // 
-
-let precioProducto1 = 0
-
-carrito.forEach(function(precioProducto){
-     precioProducto1 = precioProducto.precio;
-})
-
-let precioCarrito = parseInt(precioProducto1);
 
 
-// Operaciones //
+// total // 
+const totalHTML = document.getElementById("total");
+let total = 0;
 
-const suma = (a, b) => a + b;
-const resta = (a, b) => a - b;
-const iva = (x) => x * 0.21;
-const multiplicacion = (a,b) => a*b; 
+for (let i = 0; i < carrito.length; i++) {
+    total += carrito[i].precio;
+}
 
-
-// Variables de Precio // 
-
-let descuento = 0;
-    
-
-// Tiene Descuento? //
+totalHTML.textContent = `$${total}`;
 
 
-// Resultado // 
 
-let precioFinal = multiplicacion(suma(resta(precioCarrito,descuento),iva(precioCarrito)));
+actualizarCarritoHTML();
 
-alert(`El monto a pagar es ${precioFinal}`)
+
 
 
     
